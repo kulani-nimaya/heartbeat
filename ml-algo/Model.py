@@ -10,6 +10,25 @@ data = pd.read_csv('CardiacPatientData.csv')
 X = data[["HR", "BT", "Age", "Smoke", "FHCD"]]
 y = data["Outcome"]  # Replace "target" with your actual target column
 
+
+X = data[["HR", "BT", "Age", "Smoke", "FHCD"]]
+y = data["Outcome"]
+
+# Check for null values in the feature set and target column
+null_values = X.isnull().sum()  # Null values in features
+target_null = y.isnull().sum()  # Null values in target
+
+# Display results
+print("Null values in features:")
+print(null_values)
+print("\nNull values in target column:")
+print(f"Outcome: {target_null}")
+
+
+for column in ["Smoke", "FHCD"]:
+    mode_value = data[column].mode()[0]  # Get the most frequent value
+    data[column].fillna(mode_value, inplace=True)
+
 # Standardize the features
 scaler = StandardScaler()
 X_standardized = scaler.fit_transform(X)
